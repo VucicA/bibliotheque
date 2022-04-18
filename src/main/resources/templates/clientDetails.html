@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail du client</title>
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+        </tr>
+        </thead>
+        <tbody>
+        <td data-th-text="${client.nom}"></td>
+        <td data-th-text="${client.prenom}"></td>
+        </tbody>
+    </table>
+</body>
+</html>

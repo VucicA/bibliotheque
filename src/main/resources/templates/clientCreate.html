@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire d'incription</title>
+    <style type="text/css">
+        label {
+            display: inline-block;
+            width: 200px;
+            margin: 5px;
+            text-align: left;
+        }
+        input[type=text], input[type=password], select {
+            display: inline-block;
+            width: 200px;
+        }
+        input[type=radio] {
+            margin-left: 45px;
+        }
+        input[type=checkbox] {
+            margin-right: 190px;
+        }
+        button {
+            padding: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div align="left">
+    <h1>Formulaire d'incription</h1>
+    <form action="#" th:action="@{/client/clientCreate}" method="post" th:object="${client}">
+        <label>Nom : </label>
+        <input type="text" th:field="*{nom}"/><br/>
+        <label>Prenom : </label>
+        <input type="text" th:field="*{prenom}"/><br/>
+        <button type="submit">Valider</button>
+    </form>
+</div>
+</body>
+</html>
