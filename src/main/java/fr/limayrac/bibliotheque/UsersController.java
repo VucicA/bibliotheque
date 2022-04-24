@@ -1,23 +1,27 @@
-package fr.limayrac.banque;
+package fr.limayrac.bibliotheque;
 
-import fr.limayrac.model.Client;
-import fr.limayrac.service.ClientService;
+import fr.limayrac.model.User;
+import fr.limayrac.repository.UserRepository;
+import fr.limayrac.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Optional;
 
-@RestController
+import java.util.List;
+
+@Controller
 //@RequestMapping("/client")
-class ClientsController {
+class UsersController {
 
     @Autowired
-    private ClientService clientService;
+    private UserService userService;
+    @Autowired
+    private UserRepository userRepo;
 
+    /*
     @GetMapping("/client/clientLister")
     public ModelAndView listeClients() {
         return new ModelAndView("clientLister", "clients", clientService.getClients());
@@ -25,7 +29,7 @@ class ClientsController {
 
 
     @GetMapping("/client/clientLister/{id}")
-    public ModelAndView detailsClient(@PathVariable("id") final Integer id) {
+    public ModelAndView detailsClient(@PathVariable("id") final Long id) {
         Optional<Client> client = clientService.getClient(id);
         return new ModelAndView("clientDetails", "client", client.orElse(null));
     }
@@ -45,19 +49,35 @@ class ClientsController {
     }
 
     @GetMapping("/client/clientDelete/{id}")
-    public RedirectView effacerClient(@PathVariable("id") final Integer id){
+    public RedirectView effacerClient(@PathVariable("id") final Long id){
         clientService.deleteClient(id);
         return new RedirectView("/client/clientLister");
     }
+    */
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+
+        return "signup_form";
+    }
 
     @PostMapping("/process_register")
-    public String processRegister(Client client) {
+    public String processRegister(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(client.getPassword());
-        client.setPassword(encodedPassword);
-        logger.info(client.toString());
-        clientRepo.save(client);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        //logger.info(client.toString());
+        userRepo.save(user);
 
         return "register_success";
+    }
+
+    @GetMapping("/listeUsers")
+    public String listeUsers(Model model) {
+        List<User> listeUsers = userRepo.findAll();
+        model.addAttribute("user", listeUsers);
+
+        return "listeLivres";
     }
 }

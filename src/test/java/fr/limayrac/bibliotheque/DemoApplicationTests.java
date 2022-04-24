@@ -1,4 +1,4 @@
-package fr.limayrac.banque;
+package fr.limayrac.bibliotheque;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
